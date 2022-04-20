@@ -2,36 +2,42 @@ pipeline {
 
   agent any
   environment {
-    registry = "imtiaz1519/hello-python"
-    registryCredential = 'dockerhub_id'
-    dockerImage = ""
-  }
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred')
+	}
+
 
   stages {
+    
+    
 
     stage('Checkout Source') {
       steps {
-        git url:'https://github.com/Muhammad-Imtiaz/k8s-jenkins.git', branch:'master'
+        git url:'https://github.com/JahanzebKhan98/k8s-jenkins.git', branch:'master'
       }
     }
+    
+    
+    stage('Build') {
 
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":latest"
-        }
-      }
-    }
+			steps {
+				sh 'docker build -t 03022086691/hello-python:latest .'
+			}
+		}
 
-    stage('Push Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential  ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
+		stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push 03022086691/hello-python:latest'
+			}
+		}
+    
 
 
     stage('Deploy App') {
