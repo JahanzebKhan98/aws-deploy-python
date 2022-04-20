@@ -4,7 +4,7 @@ pipeline {
         AWS_ACCOUNT_ID="9004-1707-7879"
         AWS_DEFAULT_REGION="us-east-1" 
         IMAGE_REPO_NAME="second-repo"
-        IMAGE_TAG="label"
+        IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
    
