@@ -1,52 +1,47 @@
 pipeline {
-
-  agent any
-  environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred')
-	}
-
-
-  stages {
-    
-    
-
-    stage('Checkout Source') {
-      steps {
-        git url:'https://github.com/JahanzebKhan98/k8s-jenkins.git', branch:'master'
-      }
+    agent any
+    environment {
+        AWS_ACCOUNT_ID="9004-1707-7879"
+        AWS_DEFAULT_REGION="us-east-1" 
+        IMAGE_REPO_NAME="second-repo"
+        IMAGE_TAG="label"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
-    
-    
-    stage('Build') {
-
-			steps {
-				sh 'docker build -t 03022086691/hello-python:latest .'
-			}
-		}
-
-		stage('Login') {
-
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
-
-		stage('Push') {
-
-			steps {
-				sh 'docker push 03022086691/hello-python:latest'
-			}
-		}
-    
-
-
-    stage('Deploy App') {
-      steps {
+   
+    stages {
+        
+         stage('Logging into AWS ECR') {
+            steps {
+                script {
+                sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                }
+                 
+            }
+        }
+        
+        stage('Cloning Git') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/JahanzebKhan98/aws-deploy-python.git']]])     
+            }
+        }
+  
+    // Building Docker images
+    stage('Building image') {
+      steps{
         script {
-          kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "mykubeconfig1")
+          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
         }
       }
     }
-
-  }
+   
+    // Uploading Docker images into AWS ECR
+    stage('Pushing to ECR') {
+     steps{  
+         script {
+                sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
+                sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+         }
+        }
+      }
+    }
 }
