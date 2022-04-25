@@ -19,11 +19,18 @@ pipeline {
             }
         }
         
+        
+        
+        
+        
         stage('Cloning Git') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/sd031/aws_codebuild_codedeploy_nodeJs_demo.git']]])     
             }
         }
+        
+        
+        
   
     // Building Docker images
     stage('Building image') {
@@ -33,6 +40,9 @@ pipeline {
         }
       }
     }
+        
+        
+        
    
     // Uploading Docker images into AWS ECR
     stage('Pushing to ECR') {
@@ -40,22 +50,20 @@ pipeline {
          script {
                 sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
                 sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+                    
+             
+         }
+      }
+    }
+        
+    
              
     // downlaoding Docker images into AWS ECR
     stage('Pulling to ECR') {
      steps{  
          script {
-                sh "docker pull ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
-             
-       }
-      }
-    }
-             
-             
-//     stage('Deploy App') {
-//       steps {
-//         script {
-//           kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "mykubeconfig1")
+                sh "docker pull ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}           
+
          }
         }
       }
