@@ -63,7 +63,20 @@ pipeline {
     stage('Pulling to ECR') {
      steps{  
          script {
-                sh "docker pull ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"          
+                sh "docker pull ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"  
+             
+             
+          }
+        }
+      }
+             
+             
+             
+    // Run Docker images into AWS ECR
+    stage('Run Image') {
+     steps{  
+         script {
+                sh "docker run ${IMAGE_REPO_NAME}:${IMAGE_TAG}" 
 
          }
         }
