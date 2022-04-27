@@ -14,16 +14,16 @@
 
 
 
+print ('Hello Jahanzeb')
+
+# from flask import Flask
+# app = Flask(__name__)
+# app.config["DEBUG"] = True
 
 
-from flask import Flask
-app = Flask(__name__)
-app.config["DEBUG"] = True
-
-
-@app.route("/") 
-def Hello():
-    return "Hello from jahanazeb khan"
+# @app.route("/") 
+# def Hello():
+#     return "Hello from jahanazeb khan"
 
 
 
@@ -43,7 +43,7 @@ def Hello():
 #     return {"result":lis}
     
 
-if __name__ == "__main__":
-#     app.run(host='0.0.0.0')
-    print ('Hello Jahanzeb')
+# if __name__ == "__main__":
+# #     app.run(host='0.0.0.0')
+#     print ('Hello Jahanzeb')
 #     app.run()
