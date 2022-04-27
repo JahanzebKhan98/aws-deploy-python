@@ -28,6 +28,6 @@ spec:
     spec:
       containers:
       - name: hello-python
-        image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/jk:latest
+        image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test2:latest
         ports:
         - containerPort: 5000
