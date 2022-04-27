@@ -28,6 +28,6 @@ spec:
     spec:
       containers:
       - name: aws
-        image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test2:54
+        image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test2
         ports:
         - containerPort: 5000
