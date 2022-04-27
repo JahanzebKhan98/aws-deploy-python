@@ -47,16 +47,12 @@ pipeline {
       }
       
       
-    stage('RUN image') {
-     steps{  
-         script {
-                docker.withRegistry("https://" + registry, "ecr:us-east-1:" + registryCredential) {
-                    dockerImage.run()
-             
-             
+   stage('Deploy App') {
+        steps {
+          script {
+            kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "mykubeconfig1")
           }
         }
-      }
       }
       
       
