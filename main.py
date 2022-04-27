@@ -1,13 +1,13 @@
-import mysql.connector
+# import mysql.connector
  
-# Creating connection object
-mydb = mysql.connector.connect(
+# # Creating connection object
+# mydb = mysql.connector.connect(
 	
-    host = "localhost",
-    user = "jk",
-    password = "getmein123",
-    database = "testDB"
-)
+#     host = "localhost",
+#     user = "jk",
+#     password = "getmein123",
+#     database = "testDB"
+# )
  
 
 
@@ -28,19 +28,19 @@ def Hello():
 
 
 
-@app.route("/get_result") 
-def get_results():
-    lis = []
-    cursor = mydb.cursor()
-    cursor.execute('SELECT * FROM Persons')
-    # cursor.execute("SHOW DATABASE")
-    # Printing the connection object
+# @app.route("/get_result") 
+# def get_results():
+#     lis = []
+#     cursor = mydb.cursor()
+#     cursor.execute('SELECT * FROM Persons')
+#     # cursor.execute("SHOW DATABASE")
+#     # Printing the connection object
 
-    myresult = cursor.fetchall()
-    for i in myresult:
-        lis.append(i)
+#     myresult = cursor.fetchall()
+#     for i in myresult:
+#         lis.append(i)
         
-    return {"result":lis}
+#     return {"result":lis}
     
 
 if __name__ == "__main__":
