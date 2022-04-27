@@ -4,7 +4,7 @@ metadata:
   name: aws-deployment
 spec:
   selector:
-    app: hello-python
+    app: aws
   ports:
   - protocol: "TCP"
     port: 80
@@ -15,19 +15,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-python
+  name: aws
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-python
+      app: aws
   template:
     metadata:
       labels:
-        app: hello-python
+        app: aws
     spec:
       containers:
-      - name: hello-python
+      - name: aws
         image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test2:latest
         ports:
         - containerPort: 5000
