@@ -76,7 +76,7 @@ pipeline {
     stage('Run Image') {
      steps{  
          script {
-                sh "docker run -p 8000:8000 ${IMAGE_REPO_NAME}:${IMAGE_TAG}" 
+                sh "docker run -p 8083:8083 ${IMAGE_REPO_NAME}:${IMAGE_TAG}" 
 
          }
         }
