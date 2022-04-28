@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nana-deployment
+  name: frt-deployment
 spec:
   selector:
-    app: nana2
+    app: frt
   ports:
   - protocol: "TCP"
     port: 80
@@ -15,21 +15,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nana2
+  name: frt
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nana2
+      app: frt
   template:
     metadata:
       labels:
-        app: nana2
+        app: frt
     spec:
       imagePullSecrets:
       - name: my-registry-key
       containers:
-      - name: nana2
+      - name: frt
         image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test3:61
         imagePullPolicy: Always
         ports:
