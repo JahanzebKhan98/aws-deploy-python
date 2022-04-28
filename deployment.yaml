@@ -4,7 +4,7 @@ metadata:
   name: nana-deployment
 spec:
   selector:
-    app: nana
+    app: nana2
   ports:
   - protocol: "TCP"
     port: 80
@@ -15,21 +15,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nana
+  name: nana2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nana
+      app: nana2
   template:
     metadata:
       labels:
-        app: nana
+        app: nana2
     spec:
       imagePullSecrets:
       - name: my-registry-key
       containers:
-      - name: nana
+      - name: nana2
         image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test3
         imagePullPolicy: Always
         ports:
