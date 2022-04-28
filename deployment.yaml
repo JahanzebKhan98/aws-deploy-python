@@ -26,8 +26,11 @@ spec:
       labels:
         app: aws
     spec:
+      imagePullSecrets:
+      - name: my-registry-key
       containers:
       - name: aws
         image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test2:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
