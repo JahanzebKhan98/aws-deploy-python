@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: aws-deployment
+  name: nana-deployment
 spec:
   selector:
-    app: aws
+    app: nana
   ports:
   - protocol: "TCP"
     port: 80
@@ -15,21 +15,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aws
+  name: nana
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: aws
+      app: nana
   template:
     metadata:
       labels:
-        app: aws
+        app: nana
     spec:
       imagePullSecrets:
       - name: my-registry-key
       containers:
-      - name: aws
+      - name: nana
         image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test3:latest
         imagePullPolicy: Always
         ports:
