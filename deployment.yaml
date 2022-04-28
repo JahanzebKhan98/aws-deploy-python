@@ -30,7 +30,7 @@ spec:
       - name: my-registry-key
       containers:
       - name: nana
-        image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test3:latest
+        image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test3
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
