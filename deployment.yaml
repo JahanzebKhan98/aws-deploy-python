@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frt-deployment
+  name: happy-deployment
 spec:
   selector:
-    app: frt
+    app: happy
   ports:
   - protocol: "TCP"
     port: 80
@@ -15,21 +15,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frt
+  name: happy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frt
+      app: happy
   template:
     metadata:
       labels:
-        app: frt
+        app: happy
     spec:
       imagePullSecrets:
       - name: my-registry-key
       containers:
-      - name: frt
+      - name: happy
         image: 900417077879.dkr.ecr.us-east-1.amazonaws.com/test3:61
         imagePullPolicy: Always
         ports:
